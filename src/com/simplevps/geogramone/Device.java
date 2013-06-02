@@ -9,6 +9,7 @@ import android.provider.ContactsContract.Contacts;
 public class Device {
    private Context _ctx;
    private String _contactId;
+   private String _lookupKey;
    private String _name;
    private String _phNum;
       
@@ -17,13 +18,24 @@ public class Device {
       _contactId = id;
       _name = null;
       _phNum = null;
+      _lookupKey = null;
       
+      updateInfo();
+   }
+   
+   public String getId() { return _contactId; }
+   public String getName() { return _name; }
+   public String getPhoneNum() { return _phNum; }
+   public String getLookupKey() { return _lookupKey; }
+   
+   public void updateInfo() {
       ContentResolver cr = _ctx.getContentResolver();
       
       Cursor cCur = cr.query(Contacts.CONTENT_URI, null, 
             Contacts._ID +" = ?", new String[]{_contactId}, null);     
       if (cCur.moveToNext()) {
          _name = cCur.getString(cCur.getColumnIndex(Contacts.DISPLAY_NAME));
+         _lookupKey = cCur.getString(cCur.getColumnIndex(Contacts.LOOKUP_KEY));
          
          if (Integer.parseInt(cCur.getString(cCur.getColumnIndex(Contacts.HAS_PHONE_NUMBER))) > 0) {
             Cursor pCur = cr.query(Phone.CONTENT_URI, null, Phone.CONTACT_ID +" = ?", 
@@ -39,10 +51,6 @@ public class Device {
       }
       cCur.close();
    }
-   
-   public String getId() { return _contactId; }
-   public String getName() { return _name; }
-   public String getPhoneNum() { return _phNum; }
    
    public String toString()
    {

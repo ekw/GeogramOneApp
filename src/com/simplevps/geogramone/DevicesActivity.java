@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 public class DevicesActivity extends Activity {
    private static final int CONTACT_PICKER_RESULT = 1001;
+   private static final int EDIT_CONTACT_RESULT = 1002;
    private SimpleAdapter listAdapter;
    private DeviceDb devDb;
    
@@ -42,26 +43,6 @@ public class DevicesActivity extends Activity {
       ListView deviceListView = (ListView) findViewById(R.id.deviceListView);
       deviceListView.setAdapter(listAdapter);
       registerForContextMenu(deviceListView);
-      /*
-      deviceListView.setOnItemClickListener(new OnItemClickListener() {
-         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            @SuppressWarnings("unchecked")
-            Map<String, String> m = (Map<String, String>) parent.getItemAtPosition(position);
-            Toast.makeText(getApplicationContext(), 
-                  m.get("id") + m.get("name") + m.get("phone"), Toast.LENGTH_SHORT).show();
-        }
-      });
-          
-      deviceListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-         public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-            @SuppressWarnings("unchecked")
-            Map<String, String> m = (Map<String, String>) parent.getItemAtPosition(position);
-            Toast.makeText(getApplicationContext(), 
-                  "Long " + m.get("id") + m.get("name") + m.get("phone"), Toast.LENGTH_SHORT).show();
-            return true;
-         }
-      });
-      */
    }
    
    @Override
@@ -75,13 +56,23 @@ public class DevicesActivity extends Activity {
    @Override
    public boolean onContextItemSelected(MenuItem item) {
       AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+      ListView deviceListView = (ListView) findViewById(R.id.deviceListView);
+      @SuppressWarnings("unchecked")
+      Map<String, String> m = (Map<String, String>) deviceListView.getItemAtPosition(info.position);
+      
       switch (item.getItemId()) {
       case R.id.devedit:
+         String id = m.get("id");
+         String key = m.get("lookupKey");
+         Uri mSelectedContactUri = Contacts.getLookupUri(Long.parseLong(id), key);
+
+         Intent editIntent  = new Intent(Intent.ACTION_EDIT);
+         editIntent.setDataAndType(mSelectedContactUri, Contacts.CONTENT_ITEM_TYPE);
+         editIntent.putExtra("finishActivityOnSaveCompleted", true);
+         startActivityForResult(editIntent, EDIT_CONTACT_RESULT);
+
          return true;
       case R.id.devdelete:
-         ListView deviceListView = (ListView) findViewById(R.id.deviceListView);
-         @SuppressWarnings("unchecked")
-         Map<String, String> m = (Map<String, String>) deviceListView.getItemAtPosition(info.position);
          devDb.remove(m.get("id"));
          listAdapter.notifyDataSetChanged();
          return true;
@@ -130,6 +121,14 @@ public class DevicesActivity extends Activity {
                      t1.show();                  
                   } 
                } 
+               break;
+            case EDIT_CONTACT_RESULT:
+               Cursor cCur =  getContentResolver().query(data.getData(), null, null, null, null);  
+               if (cCur.moveToFirst()) {                    
+                  String id = cCur.getString(cCur.getColumnIndex(Contacts._ID));
+                  devDb.updateDevice(id);
+                  listAdapter.notifyDataSetChanged();
+               }               
                break;
          }
       } else {

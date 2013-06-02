@@ -112,11 +112,7 @@ public class DeviceDb {
          Log.i("DeviceDb exists", deviceId);         
       }
    }
-   
-   public ArrayList<Device> getDeviceList() {
-      return deviceList;
-   }
-   
+     
    private void updateMap() {
       deviceMap.clear();
       for (Device dev : deviceList) {
@@ -124,6 +120,7 @@ public class DeviceDb {
          map.put("id", dev.getId());
          map.put("name", dev.getName());
          map.put("phone", dev.getPhoneNum());   
+         map.put("lookupKey", dev.getLookupKey());
          deviceMap.add(map);
       }   
    }
@@ -138,6 +135,7 @@ public class DeviceDb {
       for (int i=0; i<deviceList.size(); i++) {
          if (deviceList.get(i).getId().equals(deviceId)) {
             removeIdx = i;
+            break;
          }
       }
       
@@ -146,6 +144,17 @@ public class DeviceDb {
          updateMap();
          write();
       }
+   }
+   
+   public void updateDevice(String devId) {
+      for (Device dev : deviceList) {
+         if (dev.getId().equals(devId)) {
+            dev.updateInfo();
+            break;
+         }
+      }
+      
+      updateMap();
    }
    
 }
