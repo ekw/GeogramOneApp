@@ -7,6 +7,12 @@
 	<string name="action_devices_add">Add Device</string>
 	<string name="devedit">Edit</string>
 	<string name="devdelete">Delete</string>
-	
+	<string name="deviceNameLabel">Choose a device</string>
+	<string name="textSelectDevice">Select Device</string>
+	<string name="commandLabel">Choose a command</string>
+	<string name="textSelectCommand">Select Command</string>
+	<string name="sendCmdLabel">Send Command</string>
+	<string name="devstorepin">Store PIN</string>
+	<string name="devshowpin">Show PIN</string>
 
 </resources>

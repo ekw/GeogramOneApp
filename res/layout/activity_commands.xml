@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+   android:layout_height="fill_parent"
+   android:orientation="vertical"
+   android:padding="5dip">
+ 
+   <TextView 
+      android:id="@+id/selectDevice"
+      android:text="@string/textSelectDevice"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dip" />
+ 
+   <Spinner
+      android:id="@+id/deviceSpinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:prompt="@string/deviceNameLabel" />
+
+   <TextView 
+      android:id="@+id/selectCommand"
+      android:text="@string/textSelectCommand"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dip" />
+
+   <Spinner
+      android:id="@+id/commandSpinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:prompt="@string/commandLabel" />
+   
+   <TextView 
+      android:id="@+id/param1Label"
+      android:text="Parameter 1"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dip" />
+   <EditText
+   	android:id="@+id/param1"
+   	android:layout_width="match_parent"
+   	android:layout_height="wrap_content"
+   	android:inputType="number"
+   	android:ems="10" >
+   	<requestFocus />
+   </EditText>
+   
+   <TextView 
+      android:id="@+id/param2Label"
+      android:text="Parameter 2"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dip" />
+   <EditText
+      android:id="@+id/param2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="number"
+      android:ems="10" >
+      <requestFocus />
+   </EditText>
+   
+   <TextView 
+      android:id="@+id/param3Label"
+      android:text="Parameter 3"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dip" />
+   <EditText
+      android:id="@+id/param3"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="number"
+      android:ems="10" >
+      <requestFocus />
+   </EditText>
+   
+   <Button 
+      android:id="@+id/sendCommandBtn"
+      android:text="@string/sendCmdLabel"
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:padding="5dip" />
+   
+</LinearLayout>

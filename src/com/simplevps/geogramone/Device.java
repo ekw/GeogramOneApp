@@ -12,6 +12,7 @@ public class Device {
    private String _lookupKey;
    private String _name;
    private String _phNum;
+   private String _pin;
       
    Device(Context ctx, String id) {
       _ctx = ctx;
@@ -19,6 +20,7 @@ public class Device {
       _name = null;
       _phNum = null;
       _lookupKey = null;
+      _pin = null;
       
       updateInfo();
    }
@@ -27,6 +29,8 @@ public class Device {
    public String getName() { return _name; }
    public String getPhoneNum() { return _phNum; }
    public String getLookupKey() { return _lookupKey; }
+   public String getPIN() { return (_pin == null) ? "":_pin; }
+   public void   setPIN(String pin) { _pin = (pin==null)? "":pin; }
    
    public void updateInfo() {
       ContentResolver cr = _ctx.getContentResolver();

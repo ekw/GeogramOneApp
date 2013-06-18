@@ -48,9 +48,11 @@ public class DeviceDb {
          while (line != null) {
             line = line.trim();
             if (line.length() > 0) {
-               Log.i("DeviceDb init read", line);
                Device d = new Device(appCtx, line);
+               String pin = br.readLine();
+               d.setPIN(pin);
                deviceList.add(d);
+               Log.i("DeviceDb add", d.toString());
             }
             line = br.readLine();
          }
@@ -76,7 +78,9 @@ public class DeviceDb {
          Log.i("DeviceDb write", "start");
          for (Device dev : deviceList) {
             Log.i("DeviceDb write", dev.toString());
-            bw.write(dev.getId()); 
+            bw.write(dev.getId());
+            bw.write("\n");
+            bw.write(dev.getPIN());
             bw.write("\n");
          }
          
@@ -116,11 +120,12 @@ public class DeviceDb {
    private void updateMap() {
       deviceMap.clear();
       for (Device dev : deviceList) {
-         Map<String, String> map = new HashMap<String, String>(3);
+         Map<String, String> map = new HashMap<String, String>(4);
          map.put("id", dev.getId());
          map.put("name", dev.getName());
          map.put("phone", dev.getPhoneNum());   
          map.put("lookupKey", dev.getLookupKey());
+         map.put("pin", dev.getPIN());
          deviceMap.add(map);
       }   
    }
@@ -157,4 +162,31 @@ public class DeviceDb {
       updateMap();
    }
    
+   public void setPIN(String devId, String pin) {
+      for (Device dev: deviceList) {
+         if (dev.getId().equals(devId)) {
+            dev.setPIN(pin);
+            write();
+         }
+      }
+   }
+   
+   public String getPIN(String devId) {
+      for (Device dev: deviceList) {
+         if (dev.getId().equals(devId)) {
+            return dev.getPIN();
+         }
+      }
+      return null;
+   }
+
+   public Device findDeviceWithPhone(String phone)
+   {
+      for (Device dev : deviceList) {
+         if (phone.contains(dev.getPhoneNum())) {
+            return dev;
+         }
+      }      
+      return null;
+   }
 }

@@ -5,6 +5,14 @@
       android:orderInCategory="100"
       android:title="@string/devedit"/>
 	
+	<item android:id="@+id/devstorepin"
+      android:orderInCategory="100"
+      android:title="@string/devstorepin"/>
+	
+   <item android:id="@+id/devshowpin"
+      android:orderInCategory="100"
+      android:title="@string/devshowpin"/>
+	  
    <item android:id="@+id/devdelete"
       android:orderInCategory="100"
       android:title="@string/devdelete"/>
