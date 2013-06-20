@@ -84,7 +84,7 @@ public class DevicesActivity extends Activity {
          String pin = devDb.getPIN(m.get("id"));
          String text;
          
-         if (pin == null)
+         if (pin == null || pin.length() == 0)
             text = "No PIN stored for this device";
          else
             text = "PIN stored: " + pin; 

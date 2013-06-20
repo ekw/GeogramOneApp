@@ -56,8 +56,7 @@ public class Device {
       cCur.close();
    }
    
-   public String toString()
-   {
-      return _name + " " + _phNum;
+   public String toString() {
+      return _name + " " + _phNum + " " + _pin;
    }
 }

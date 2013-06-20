@@ -19,6 +19,7 @@ public class SmsReceiver extends BroadcastReceiver {
    public static final String MSG_SMS_SEND_CMD = "com.simplevps.geogramone.MSG_SMS_SEND_CMD";
    public static final String MSG_SMS_SENT = "com.simplevps.geogramone.MSG_SMS_SENT";
    public static final String MSG_SMS_DELIVERED = "com.simplevps.geogramone.MSG_SMS_DELIVERED";
+   public static final String MSG_UPDATE_MAP = "com.simplevps.geogramone.MSG_UPDATE_MAP";
    
    //======================================================================
    @Override
@@ -57,7 +58,7 @@ public class SmsReceiver extends BroadcastReceiver {
                  break;
          }
       }
-      else if (action.equalsIgnoreCase(MSG_SMS_DELIVERED)){
+      else if (action.equalsIgnoreCase(MSG_SMS_DELIVERED)) {
          switch (getResultCode())
          {
              case Activity.RESULT_OK:
@@ -76,8 +77,7 @@ public class SmsReceiver extends BroadcastReceiver {
          SmsMessage[] msgs = null;
          String str = "";
          String originator = null;
-         if (bundle != null)
-         {
+         if (bundle != null) {
              //---retrieve the SMS message received---
              Object[] pdus = (Object[]) bundle.get("pdus");
              msgs = new SmsMessage[pdus.length];
@@ -103,9 +103,20 @@ public class SmsReceiver extends BroadcastReceiver {
                    String lat = m.group(1);
                    String lon = m.group(2);
                    String info = m.group(3);
-                   Log.d("SmsReceiver", "Latitude " + lat);
-                   Log.d("SmsReceiver", "Longitude " + lon);                
-                   Log.d("SmsReceiver", "Info " + info);
+                   double dlat = Location.DMDMToDecimal(lat);
+                   double dlon = Location.DMDMToDecimal(lon);
+                   Log.i(TAG, "Latitude " + Double.toString(dlat));
+                   Log.i(TAG, "Longitude " + Double.toString(dlon));
+                   Log.i(TAG, "Info " + info);
+                   
+                   LocationModel lm = LocationModel.getInstance();
+                   Location loc = new Location((int) (dlat*1000000), (int)(dlon*1000000), info);
+                   lm.add(dev.getId(), loc);
+                   
+                   Intent i = new Intent(MSG_UPDATE_MAP);
+                   i.putExtra("devId", dev.getId());
+                   context.sendBroadcast(i);
+                   Log.i(TAG, "MSG_UPDATE_MAP Sent");
                 }
                 this.abortBroadcast();
              }
@@ -113,8 +124,7 @@ public class SmsReceiver extends BroadcastReceiver {
       } 
    }
    
-   private void sendSMS(Context context, String phoneNumber, String message)
-   {        
+   private void sendSMS(Context context, String phoneNumber, String message) {        
        PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
            new Intent(MSG_SMS_SENT), 0);
 

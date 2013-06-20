@@ -17,6 +17,7 @@ import android.content.Context;
 import android.util.Log;
 
 public class DeviceDb {
+   private static String TAG = "DeviceDb";
    private static DeviceDb instance = null;
    private static Context appCtx;
    private static ArrayList<Device> deviceList;
@@ -43,7 +44,6 @@ public class DeviceDb {
          InputStreamReader isr = new InputStreamReader(fin);
          BufferedReader br = new BufferedReader(isr);
          
-         Log.i("DeviceDb init", "start");
          String line = br.readLine();
          while (line != null) {
             line = line.trim();
@@ -52,7 +52,7 @@ public class DeviceDb {
                String pin = br.readLine();
                d.setPIN(pin);
                deviceList.add(d);
-               Log.i("DeviceDb add", d.toString());
+               Log.i(TAG, "init add " + d.toString());
             }
             line = br.readLine();
          }
@@ -75,9 +75,8 @@ public class DeviceDb {
          OutputStreamWriter osw = new OutputStreamWriter(fout);
          BufferedWriter bw = new BufferedWriter(osw);
          
-         Log.i("DeviceDb write", "start");
          for (Device dev : deviceList) {
-            Log.i("DeviceDb write", dev.toString());
+            Log.i(TAG, "write " + dev.toString());
             bw.write(dev.getId());
             bw.write("\n");
             bw.write(dev.getPIN());
@@ -107,13 +106,13 @@ public class DeviceDb {
       
       if (!exists){
          Device d = new Device(appCtx, deviceId);
-         Log.i("DeviceDb add", d.toString());
+         Log.i(TAG, "add " + d.toString());
          deviceList.add(d);
          updateMap();
          write();
       }
       else {
-         Log.i("DeviceDb exists", deviceId);         
+         Log.i(TAG, "exists " + deviceId);         
       }
    }
      
@@ -134,8 +133,7 @@ public class DeviceDb {
       return deviceMap;
    }
    
-   public void remove(String deviceId)
-   {
+   public void remove(String deviceId) {
       int removeIdx = -1;
       for (int i=0; i<deviceList.size(); i++) {
          if (deviceList.get(i).getId().equals(deviceId)) {
@@ -180,8 +178,7 @@ public class DeviceDb {
       return null;
    }
 
-   public Device findDeviceWithPhone(String phone)
-   {
+   public Device findDeviceWithPhone(String phone) {
       for (Device dev : deviceList) {
          if (phone.contains(dev.getPhoneNum())) {
             return dev;

@@ -17,7 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CommandActivity extends Activity {
-   
+   private static final String TAG = "CommandActivity";
+
    @Override
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);       
@@ -52,7 +53,8 @@ public class CommandActivity extends Activity {
                parm3 = p3.getText().toString().trim();
             }
             
-            if (devMap.get("pin") == null){
+            String devPin = devMap.get("pin");
+            if (devPin == null || devPin.length() < 1){
                Toast.makeText(getApplicationContext(), "Device has no PIN stored", 
                      Toast.LENGTH_LONG).show();
             }
@@ -67,7 +69,7 @@ public class CommandActivity extends Activity {
                   sendBroadcast(i);
                }
                else {
-                  Log.e("CommandActivity", "CommandProcessor.makeCommand() returned null");
+                  Log.e(TAG, "CommandProcessor.makeCommand() returned null");
                   Toast.makeText(getApplicationContext(), "Can't make command", 
                         Toast.LENGTH_LONG).show();
                }

@@ -3,7 +3,8 @@
 
 	<string name="app_name">GeogramOne</string>
 	<string name="action_commands">Send Command</string>
-	<string name="action_devices">Manage Devices</string><string name="hello_world">Hello world!</string>
+	<string name="action_devices">Manage Devices</string>
+	<string name="hello_world">Hello world!</string>
 	<string name="action_devices_add">Add Device</string>
 	<string name="devedit">Edit</string>
 	<string name="devdelete">Delete</string>
@@ -14,5 +15,6 @@
 	<string name="sendCmdLabel">Send Command</string>
 	<string name="devstorepin">Store PIN</string>
 	<string name="devshowpin">Show PIN</string>
+	<string name="action_debug">Debug</string>
 
 </resources>

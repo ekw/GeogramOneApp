@@ -42,8 +42,7 @@ public class CommandProcessor {
       return commands;
    }
      
-   public String makeCommand(String command, String pin, String p1, String p2, String p3)
-   {
+   public String makeCommand(String command, String pin, String p1, String p2, String p3) {
       int cmdNum = Integer.parseInt(command);
       String commandStr = null;
       switch(cmdNum) {
