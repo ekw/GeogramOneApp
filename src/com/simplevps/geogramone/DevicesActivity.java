@@ -1,5 +1,6 @@
 package com.simplevps.geogramone;
 
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
@@ -39,7 +40,7 @@ public class DevicesActivity extends Activity {
       devDb.init(getApplicationContext());
       listAdapter = new SimpleAdapter(
             getApplicationContext(), 
-            devDb.getDeviceMap(), 
+            devDb.getDeviceMap(),
             R.layout.devicerow, 
             new String[] {"name", "phone"},
             new int[] {R.id.text1, R.id.text2});
@@ -47,6 +48,17 @@ public class DevicesActivity extends Activity {
       ListView deviceListView = (ListView) findViewById(R.id.deviceListView);
       deviceListView.setAdapter(listAdapter);
       registerForContextMenu(deviceListView);
+
+   }
+   
+   @Override
+   public void onAttachedToWindow() {
+       super.onAttachedToWindow();
+      
+      List<Map<String,String>> devMap = DeviceDb.getInstance().getDeviceMap();
+      if (devMap.isEmpty()) {
+         openOptionsMenu();
+      }
    }
    
    @Override

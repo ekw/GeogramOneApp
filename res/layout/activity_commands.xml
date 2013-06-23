@@ -33,7 +33,7 @@
    
    <TextView 
       android:id="@+id/param1Label"
-      android:text="Parameter 1"
+      android:text="@string/param1"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:padding="5dip" />
@@ -48,7 +48,7 @@
    
    <TextView 
       android:id="@+id/param2Label"
-      android:text="Parameter 2"
+      android:text="@string/param2"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:padding="5dip" />
@@ -63,7 +63,7 @@
    
    <TextView 
       android:id="@+id/param3Label"
-      android:text="Parameter 3"
+      android:text="@string/param3"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:padding="5dip" />
