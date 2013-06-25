@@ -8,9 +8,11 @@ See the Geogram ONE [Application Overview] [2] for the device specifications.
 
 Right now, only these commands are implemented:
 
-1. Option 0 - Return current coordinates
-2. Option 1 - Motion alert
-3. Option 4 - Send interval
+1. Option 0 - Return current coordinates (The coordinates in the response message will be displayed on a map)
+2. Option 1 - Motion alert 
+3. Option 4 - Send interval 
 4. Option 6 - EEPROM configuration
+
+OpenStreetMap is the map provider used by this app.
 
 I am not associated with the maker of Geogram ONE in any way.  I bought a Geogram ONE and wrote this app for my own use.
